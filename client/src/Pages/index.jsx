@@ -3,24 +3,38 @@ import "./assets/Form.css"; // Import the CSS file
 import demoImage from "./assets/Images/0001.jpg"; // Replace with your image path
 
 const Form = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    image: null,
-  });
+  const [name, setName] = useState('');
+  const [gardianName, setGardianName] = useState('');
+  const [base64Image, setBase64Image] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
-  };
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    if(file){
+      convertImageToBase(file);
+    }
+  }
+
+  const convertImageToBase = (file) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = reader.result;
+      setBase64Image(base64String);
+    };
+    reader.onerror = (err) => {
+      console.err("Error : ", err);
+    };
+    reader.readAsDataURL(file);
+  }
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    // Add your form submission logic here
+    const formData = {
+      StudentName : name,
+      GuardianName: gardianName,
+      Img : base64Image
+    }
+    console.log(formData);
   };
 
   return (
@@ -34,23 +48,29 @@ const Form = () => {
         {/* Right Div (Form) */}
         <div className="right-div">
           <h1 className="form-heading">ADMISSION FORM</h1>
-          <p className="form-para">This is a Admission card Generator</p>
+          <p className="form-para">Grace Valley Public School Maravattam</p>
           <form onSubmit={handleSubmit} className="form">
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">Student Name</label>
               <input
                 type="text"
                 id="name"
+                value={name}
+                onChange={(e) => { setName (e.target.value)}}
                 name="name"
+                placeholder="Enter the Student name"
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="gardName">Gardian Name</label>
               <input
-                type="tel"
-                id="phone"
-                name="phone"
+                type="text"
+                id="gardName"
+                value={gardianName}
+                onChange={(e) => {setGardianName(e.target.value)}}
+                name="gardName"
+                placeholder="Enter your Guardian Name"
                 required
               />
             </div>
@@ -61,10 +81,11 @@ const Form = () => {
                 id="image"
                 name="image"
                 accept="image/*"
+                onChange={handleImage}
                 required
               />
             </div>
-            <button type="submit" className="submit-button">
+            <button type="submit" className="submit-button" onClick={handleSubmit}>
               Submit
             </button>
           </form>
