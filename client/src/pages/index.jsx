@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import "./assets/Form.css"; 
 import demoImage from "./assets/Images/0001.jpg";
 import bgImage from "./assets/Images/bg.png";
@@ -97,6 +97,7 @@ const Form = () => {
             <button type="submit" className="submit-button">
               Submit
             </button>
+            <p className="dev-dtils">Developed By <Link to="https://anasuddeen-portfolio.netlify.app/">Anasuddeen</Link></p>
           </form>
         </div>
       </div>

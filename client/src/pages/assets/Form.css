@@ -118,6 +118,12 @@ body {
     transform: scale(1.05);
     background: linear-gradient(135deg, #2575fc, #6a11cb);
   }
+
+  .dev-dtils{
+    font-size: 12px;
+    margin-top: 20px;
+    opacity: 0.8;
+  }
   
   /* Animations */
   @keyframes fadeIn {
